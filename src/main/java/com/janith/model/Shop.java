@@ -31,7 +31,7 @@ public class Shop {
     private Address address;
 
     @Embedded
-    private ContactInformation contactIformation;
+    private ContactInformation contactInformation;
 
     private String openingHours;
 
