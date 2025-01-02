@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -96,7 +97,12 @@ public class ComputerServiceImp implements ComputerService{
     }
 
     private List<Computer> filterByCategory(List<Computer> computers, String computerCategory) {
-
+        return computers.stream().filter(computer -> {
+            if (computer.getComputerCategory()!=null){
+                return computer.getComputerCategory().getName().equals(computerCategory);
+            }
+            return false;
+        }).collect(Collectors.toList());
     }
 
     private List<Computer> filterbyIsSeasonal(List<Computer> computers, boolean isSeasonal) {
@@ -125,16 +131,23 @@ public class ComputerServiceImp implements ComputerService{
 
     @Override
     public List<Computer> searchComputer(String keyword) {
-        return List.of();
+        return computerRepository.searchComputer(keyword);
     }
 
     @Override
     public Computer findComputerById(Long computerId) throws Exception {
-        return null;
+        Optional<Computer> optionalComputer = computerRepository.findById(computerId);
+
+        if (optionalComputer.isEmpty()){
+            throw new Exception("Computer Not Exist");
+        }
+        return optionalComputer.get();
     }
 
     @Override
     public Computer updateAvailabilityStatus(Long computerId) throws Exception {
-        return null;
+        Computer computer = findComputerById(computerId);
+        computer.setAvailable(!computer.isAvailable());
+        return computerRepository.save(computer);
     }
 }
