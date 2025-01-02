@@ -36,7 +36,7 @@ public class AdminComputerController {
         return new ResponseEntity<>(computer, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteComputer(@PathVariable Long id,
                                                           @RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
@@ -48,8 +48,8 @@ public class AdminComputerController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Computer> updateComputerAvailabilityComputer(@PathVariable Long id,
+    @PutMapping("/{id}")
+    public ResponseEntity<Computer> updateComputerAvailabilityStatus(@PathVariable Long id,
                                                           @RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         Computer computer = computerService.updateAvailabilityStatus(id);
