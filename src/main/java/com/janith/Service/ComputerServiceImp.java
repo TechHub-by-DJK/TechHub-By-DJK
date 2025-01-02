@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ComputerServiceImp implements ComputerService{
@@ -63,7 +64,63 @@ public class ComputerServiceImp implements ComputerService{
                                            String computerCategory) {
 
         List<Computer> computers = computerRepository.findByShopId(shopId);
+
+        if (isBusinessUser){
+            computers = filterByBusinessUser(computers, isBusinessUser);
+        }
+
+        if (isGamer){
+            computers = filterByGamer(computers, isGamer);
+        }
+        
+        if (isHomeUser){
+            computers = filterByHomeUser(computers, isHomeUser);
+        }
+        
+        if (isDeveloper){
+            computers = filterbyDeveloper(computers, isDeveloper);
+        }
+        if (isDesigner){
+            computers = filterbyDesigner(computers, isDesigner);
+        }
+        
+        if (isSeasonal){
+            computers = filterbyIsSeasonal(computers, isSeasonal);
+        }
+
+        if (computerCategory != null && !computerCategory.equals("")){
+            computers = filterByCategory(computers, computerCategory);
+        }
+
         return computers;
+    }
+
+    private List<Computer> filterByCategory(List<Computer> computers, String computerCategory) {
+
+    }
+
+    private List<Computer> filterbyIsSeasonal(List<Computer> computers, boolean isSeasonal) {
+        return computers.stream().filter(computer -> computer.isSeasonal() == isSeasonal).collect(Collectors.toList());
+    }
+
+    private List<Computer> filterbyDesigner(List<Computer> computers, boolean isDesigner) {
+        return computers.stream().filter(computer -> computer.isDesigner() == isDesigner).collect(Collectors.toList());
+    }
+
+    private List<Computer> filterbyDeveloper(List<Computer> computers, boolean isDeveloper) {
+        return computers.stream().filter(computer -> computer.isDeveloper() == isDeveloper).collect(Collectors.toList());
+    }
+
+    private List<Computer> filterByHomeUser(List<Computer> computers, boolean isHomeUser) {
+        return computers.stream().filter(computer -> computer.isHomeUser() == isHomeUser).collect(Collectors.toList());
+    }
+
+    private List<Computer> filterByGamer(List<Computer> computers, boolean isGamer) {
+        return computers.stream().filter(computer -> computer.isGamer() == isGamer).collect(Collectors.toList());
+    }
+
+    private List<Computer> filterByBusinessUser(List<Computer> computers, boolean isBusinessUser) {
+        return computers.stream().filter(computer -> computer.isBusinessUser() == isBusinessUser).collect(Collectors.toList());
     }
 
     @Override
