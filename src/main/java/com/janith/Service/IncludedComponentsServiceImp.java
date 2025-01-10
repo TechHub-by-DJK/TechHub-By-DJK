@@ -48,21 +48,40 @@ public class IncludedComponentsServiceImp implements IncludedComponentsService{
 
     @Override
     public List<ComponentCategory> findComponentCategoryByShopId(Long shopId) throws Exception {
-        return List.of();
+        shopService.findShopById(shopId);
+        return componentCategoryRepository.findByShopId(shopId);
     }
 
     @Override
     public IncludedComponents createComponent(Long shopId, String componentName, long categoryId) throws Exception {
-        return null;
+
+        Shop shop = shopService.findShopById(shopId);
+        ComponentCategory category = findComponentCategoryById(categoryId);
+
+        IncludedComponents component = new IncludedComponents();
+        component.setShop(shop);
+        component.setName(componentName);
+        component.setCategory(category);
+
+        IncludedComponents item = includedComponentRepository.save(component);
+        category.getComponents().add(item);
+        return component;
     }
 
     @Override
     public List<IncludedComponents> findShopIncludedComponents(Long shopId) throws Exception {
-        return List.of();
+
+        return includedComponentRepository.findByShopId(shopId);
     }
 
     @Override
     public IncludedComponents updateStock(Long id) throws Exception {
-        return null;
+        Optional<IncludedComponents> optionalIncludedComponents = includedComponentRepository.findById(id);
+        if (optionalIncludedComponents.isEmpty()) {
+            throw new Exception("Component not found");
+        }
+        IncludedComponents includedComponents = optionalIncludedComponents.get();
+        includedComponents.setInStock(!includedComponents.isInStock());
+        return includedComponentRepository.save(includedComponents);
     }
 }
