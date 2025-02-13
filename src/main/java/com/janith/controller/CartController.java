@@ -1,8 +1,10 @@
 package com.janith.controller;
 
 import com.janith.Service.CartService;
+import com.janith.Service.UserService;
 import com.janith.model.Cart;
 import com.janith.model.CartItem;
+import com.janith.model.User;
 import com.janith.request.AddCartItemRequest;
 import com.janith.request.UpdateCartItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private UserService userService;
 
     @PutMapping("/cart/add")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest req,
@@ -49,8 +54,9 @@ public class CartController {
     @PutMapping("/cart/clear")
     public ResponseEntity<Cart> clearCart(
             @RequestHeader("Authorization") String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
 
-        Cart cart = cartService.clearCart(jwt);
+        Cart cart = cartService.clearCart(user.getId());
 
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
@@ -58,8 +64,9 @@ public class CartController {
     @GetMapping("/cart")
     public ResponseEntity<Cart> findUserCart(
             @RequestHeader("Authorization") String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
 
-        Cart cart = cartService.findCartByUserId(jwt);
+        Cart cart = cartService.findCartByUserId(user.getId());
 
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
