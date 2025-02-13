@@ -18,4 +18,6 @@ public interface OrderService {
 
     public List<Order> getShopsOrder(Long shopId, String orderStatus) throws Exception;
 
+    public Order findOrderById(Long orderId) throws Exception;
+
 }
