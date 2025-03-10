@@ -53,7 +53,7 @@ This project is licensed under the **MIT License**.
 
 ## 🤝 Connect with Me
 🔗 [LinkedIn](https://www.linkedin.com/in/janithrk/)  
-📧 Email: your-email@example.com
+📧 Email: janithprabash944ugc@gmail.com
 
 ---
 
