@@ -30,6 +30,9 @@ public class TechGadget {
     @ManyToOne
     private ComponentCategory category;
 
+    @ManyToOne
+    private Shop shop;
+
     public enum CompatibilityType {
         LAPTOP, PC, BOTH
     }
