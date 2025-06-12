@@ -46,5 +46,33 @@ public class Computer {
     @ManyToMany
     private List<IncludedComponents> includedComponents = new ArrayList<>();
 
+    @ManyToMany
+    private List<TechGadget> upgradeableGadgets = new ArrayList<>();
+
     private Date creationDate;
+
+    private String brand;
+
+    private String cpu;
+    private String ram;
+    private String storage;
+    private String gpu;
+    private String operatingSystem;
+
+    private Double rating;
+
+    private Integer stockQuantity;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
+    public enum ComputerType {
+        LAPTOP, PC
+    }
+
+    @Enumerated(EnumType.STRING)
+    private ComputerType computerType;
 }
