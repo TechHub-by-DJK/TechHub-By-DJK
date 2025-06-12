@@ -38,6 +38,23 @@ public class ComputerServiceImp implements ComputerService{
         computer.setDesigner(req.isDesigner());
         computer.setDeveloper(req.isDeveloper());
         computer.setHomeUser(req.isHomeUser());
+        computer.setBrand(req.getBrand());
+        computer.setCpu(req.getCpu());
+        computer.setRam(req.getRam());
+        computer.setStorage(req.getStorage());
+        computer.setGpu(req.getGpu());
+        computer.setOperatingSystem(req.getOperatingSystem());
+        computer.setRating(req.getRating());
+        computer.setStockQuantity(req.getStockQuantity());
+        if (req.getComputerType() != null) {
+            try {
+                computer.setComputerType(Computer.ComputerType.valueOf(req.getComputerType().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                computer.setComputerType(null); // or handle invalid type as needed
+            }
+        }
+        computer.setCreatedAt(new java.util.Date());
+        computer.setUpdatedAt(new java.util.Date());
 
         Computer savedComputer = computerRepository.save(computer);
         shop.getComputers().add(savedComputer);
