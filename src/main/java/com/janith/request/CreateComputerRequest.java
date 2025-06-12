@@ -30,4 +30,14 @@ public class CreateComputerRequest {
 
     private List<IncludedComponents> includedComponents;
 
+    private String brand;
+    private String cpu;
+    private String ram;
+    private String storage;
+    private String gpu;
+    private String operatingSystem;
+    private Double rating;
+    private Integer stockQuantity;
+    private String computerType; // LAPTOP or PC
+
 }
