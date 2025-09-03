@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,17 +51,28 @@ public class ShopServiceImp implements ShopService {
     public Shop updateShop(Long shopId, CreateShopRequest updatedShop) throws Exception {
         Shop shop = findShopById(shopId);
 
-        if(shop.getBuildingtype() != null){
+        if (updatedShop.getBuildingtype() != null) {
             shop.setBuildingtype(updatedShop.getBuildingtype());
         }
-        if(shop.getDescription() != null){
+        if (updatedShop.getDescription() != null) {
             shop.setDescription(updatedShop.getDescription());
         }
-        if(shop.getName() != null){
+        if (updatedShop.getName() != null) {
             shop.setName(updatedShop.getName());
         }
-        if(shop.getContactInformation() != null){
+        if (updatedShop.getContactInformation() != null) {
             shop.setContactInformation(updatedShop.getContactInformation());
+        }
+        if (updatedShop.getOpeningHours() != null) {
+            shop.setOpeningHours(updatedShop.getOpeningHours());
+        }
+        if (updatedShop.getImages() != null) {
+            shop.setImages(updatedShop.getImages());
+        }
+        if (updatedShop.getAddress() != null) {
+            // Replace or set address and persist
+            Address saved = addressRepository.save(updatedShop.getAddress());
+            shop.setAddress(saved);
         }
         return shopRepository.save(shop);
     }
@@ -134,6 +146,16 @@ public class ShopServiceImp implements ShopService {
     public Shop updateShopStatus(Long id) throws Exception {
         Shop shop = findShopById(id);
         shop.setOpen(!shop.isOpen());
+        return shopRepository.save(shop);
+    }
+
+    @Override
+    public Shop addShopImage(Long shopId, String imageUrl) throws Exception {
+        Shop shop = findShopById(shopId);
+        if (shop.getImages() == null) {
+            shop.setImages(new ArrayList<>());
+        }
+        shop.getImages().add(imageUrl);
         return shopRepository.save(shop);
     }
 }

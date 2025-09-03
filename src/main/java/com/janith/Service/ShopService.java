@@ -25,8 +25,7 @@ public interface ShopService {
     public ShopDto addToFavourites(Long shopId, User user) throws Exception;
 
     public Shop updateShopStatus(Long id) throws Exception;
+
+    // Append an image to a shop and persist
+    public Shop addShopImage(Long shopId, String imageUrl) throws Exception;
 }
-
-
-
-
