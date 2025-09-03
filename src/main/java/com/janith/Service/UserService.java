@@ -8,4 +8,6 @@ public interface UserService {
 
     public User findUserByEmail(String email) throws Exception;
 
+    // Update and persist the user's profile image URL
+    User updateProfileImage(Long userId, String imageUrl) throws Exception;
 }

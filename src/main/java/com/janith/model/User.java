@@ -30,6 +30,10 @@ public class User {
 
     private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
+    // Profile image URL stored in DB
+    @Column(length = 1000)
+    private String profileImageUrl;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();

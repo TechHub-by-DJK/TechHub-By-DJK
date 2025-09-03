@@ -32,4 +32,12 @@ public class UserServiceImp implements UserService{
 
         return user;
     }
+
+    @Override
+    public User updateProfileImage(Long userId, String imageUrl) throws Exception {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("user not found"));
+        user.setProfileImageUrl(imageUrl);
+        return userRepository.save(user);
+    }
 }
